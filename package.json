@@ -1,0 +1,22 @@
+{
+  "name": "nexora",
+  "version": "1.0.0",
+  "description": "Nexora is a next connection or opportunity to connect with other",
+  "keywords": [
+    "NdeJs",
+    "JavaScript"
+  ],
+  "license": "ISC",
+  "author": "Ashish Jayaswal",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev" : "nodemon src/app.js"
+  
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "nodemon": "^3.1.14"
+  }
+}
