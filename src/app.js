@@ -2,35 +2,29 @@ const express = require("express")
 
 const app = express()
 
-// only handle GET call
-app.get("/user", (req,res)=> {
-    res.send({firstName: "Ashish", lastName : "Jayaswal"})
+
+app.get(/.*fly$/, (req,res) => {
+    res.send("HTTP Routing with regex")
 })
 
-// only handle POST call
-app.post("/user", (req,res)=>{
-    res.send("User Data Successfully saved into db")
+// query params
+app.get("/user", (req, res)=>{
+    console.log(req.query)
+    res.send(req.query)
 })
 
-// only handle DELETE call
-app.delete("/user",(req,res)=>{
-    res.send("User data deleted successfully from the db")
+
+// req params
+app.get("/user/:id", (req,res)=>{
+    console.log(req.params)
+    res.send(req.params)
 })
 
-// only handle PUT call
-app.put('/user',(req,res)=>{
-    res.send("User Data updated through put")
+app.get("/user/:id/:name/:password", (req,res)=>{
+    console.log(req.params)
+    res.send(req.params)
 })
 
-// only handle PATCH call
-app.patch('/user',(req,res)=>{
-    res.send("User detail updated through patch")
-})
-
-// can handle anytype of the call (GET, POST, PATCH, PUT, DELETE)
-app.use('/', (req,res) => {
-    res.send("Home Page, can handle anyone")
-})
 const portNum = 7777
 app.listen(portNum , ()=> {
     console.log("Server is listening on port number", portNum)
