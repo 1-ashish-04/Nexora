@@ -2,26 +2,31 @@ const express = require("express");
 
 const app = express();
 
-app.use("/", (req, res, next) => {
-  console.log(
-    "Route / handler act as a middleware 1 if next is present or invoked",
-  );
-  next();
-});
+const {adminAuth, userAuth}  = require("./middlewares/auth")
 
-app.use(
-  "/user",
-  (req, res, next) => {
-    console.log(
-      "Route handler 1 for /user (act as a middleware 2 if next is present or invoked)",
-    );
-    next()
-  },
-  (req, res) => {
-    console.log("route handler 2");
-    res.send("route handler 2 for /user");
-  },
-);
+app.use("/admin", adminAuth)
+
+app.get("/admin/getAllData",(req,res)=>{
+    res.send("All data loaded successfully.")
+})
+
+app.get("/admin/deleteUser", (req,res)=>{  
+    res.send("Specific data deleted successfully.")  
+})
+
+app.use("/user/login", (req,res)=>{
+    res.send("User loggin successfully.")
+})
+
+app.use("/user", userAuth)
+
+app.get("/user/data", (req,res)=>{
+    res.send("User get its data successfully.")
+})
+
+app.get("/user/delete", (req,res)=>{
+    res.send("User data deleted.")
+})
 
 const portNum = 7777;
 app.listen(portNum, () => {
