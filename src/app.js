@@ -3,27 +3,25 @@ const express = require("express")
 const app = express()
 
 
-app.get(/.*fly$/, (req,res) => {
-    res.send("HTTP Routing with regex")
-})
+// app.use("/route", routeHandler1, [routeHandler2, routeHandler3, routeHandler4], routeHandler5)
 
-// query params
-app.get("/user", (req, res)=>{
-    console.log(req.query)
-    res.send(req.query)
-})
+const val = [(req,res, next)=>{
+    console.log("routeHandler 2 currently going on.")
+    // res.send("Handler 2 ...!")
+    next()
+},
+(req,res)=>{
+    console.log("routeHandler 3 currently going on.")
+    res.send("Handler 3 ...!")
+    
+}]
 
-
-// req params
-app.get("/user/:id", (req,res)=>{
-    console.log(req.params)
-    res.send(req.params)
-})
-
-app.get("/user/:id/:name/:password", (req,res)=>{
-    console.log(req.params)
-    res.send(req.params)
-})
+app.use("/user", (req,res, next)=>{
+    console.log("routeHandler 1 currently going on.")
+    // res.send("Handler 1 ...!")
+    next()
+}, val
+)
 
 const portNum = 7777
 app.listen(portNum , ()=> {
