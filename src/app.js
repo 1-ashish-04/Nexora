@@ -1,29 +1,29 @@
-const express = require("express")
+const express = require("express");
 
-const app = express()
+const app = express();
 
+app.use("/", (req, res, next) => {
+  console.log(
+    "Route / handler act as a middleware 1 if next is present or invoked",
+  );
+  next();
+});
 
-// app.use("/route", routeHandler1, [routeHandler2, routeHandler3, routeHandler4], routeHandler5)
-
-const val = [(req,res, next)=>{
-    console.log("routeHandler 2 currently going on.")
-    // res.send("Handler 2 ...!")
+app.use(
+  "/user",
+  (req, res, next) => {
+    console.log(
+      "Route handler 1 for /user (act as a middleware 2 if next is present or invoked)",
+    );
     next()
-},
-(req,res)=>{
-    console.log("routeHandler 3 currently going on.")
-    res.send("Handler 3 ...!")
-    
-}]
+  },
+  (req, res) => {
+    console.log("route handler 2");
+    res.send("route handler 2 for /user");
+  },
+);
 
-app.use("/user", (req,res, next)=>{
-    console.log("routeHandler 1 currently going on.")
-    // res.send("Handler 1 ...!")
-    next()
-}, val
-)
-
-const portNum = 7777
-app.listen(portNum , ()=> {
-    console.log("Server is listening on port number", portNum)
-})
+const portNum = 7777;
+app.listen(portNum, () => {
+  console.log("Server is listening on port number", portNum);
+});
