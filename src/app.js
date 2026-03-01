@@ -1,25 +1,41 @@
 const express = require("express");
-
+const { connectDB } = require("./config/database")
+const User = require("./models/user")
 const app = express();
 
-app.use("/user", (req,res)=>{
-    try{
-    throw new Error("Error Happend")
-    res.send("Helllloooo User...")}
-    catch{
-        res.status(500).send("Some went wrong.")
+
+app.post("/signup", async (req, res) => {
+
+    // create a new instance of the user model
+    const userData = new User({
+        firstName: "Ashish",
+        lastName: "Jayaswal",
+        emailId: "ashish@22.com",
+        password: "Ashish@22"
+    })
+
+    try {
+        await userData.save()
+
+        res.send("User data saved Successfully.")
+    }
+    catch (err) {
+        res.status(400).send(err.message)
     }
 })
 
-/*
-app.use("/", (err, req, res, next)=>{
-    if(err){
-        res.status(500).send("Something went wrong")
-    }
-})
-    */
+connectDB().then(() => {
+    console.log("Successfully connected to the database ---> nexora")
 
-const portNum = 7777;
-app.listen(portNum, () => {
-  console.log("Server is listening on port number", portNum);
-});
+    const portNum = 7777;
+
+    app.listen(portNum, () => {
+        console.log("Server is listening on port number", portNum);
+    });
+})
+
+    .catch(() => {
+        console.log("Not connected to the cluster")
+    })
+
+
