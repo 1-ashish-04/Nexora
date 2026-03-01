@@ -7,7 +7,7 @@ const app = express();
 app.post("/signup", async (req, res) => {
 
     // create a new instance of the user model
-    const userData = new User({
+    const userData = new User({  // static data  // these indicate one document of collection User
         firstName: "Ashish",
         lastName: "Jayaswal",
         emailId: "ashish@22.com",
@@ -15,7 +15,7 @@ app.post("/signup", async (req, res) => {
     })
 
     try {
-        await userData.save()
+        await userData.save()  // data saved into database nexora, collection User
 
         res.send("User data saved Successfully.")
     }
@@ -24,7 +24,7 @@ app.post("/signup", async (req, res) => {
     }
 })
 
-connectDB().then(() => {
+connectDB().then(() => { //  Promise handling 
     console.log("Successfully connected to the database ---> nexora")
 
     const portNum = 7777;
